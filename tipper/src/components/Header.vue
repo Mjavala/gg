@@ -6,7 +6,7 @@
                     lightmode ? {color: '#201c2b !important'} : {color: '#c32aff !important'}
                     ]"
                 >
-                    <font-awesome-icon class="loader" :icon="{ prefix: 'fa', iconName: 'envelope' }" />
+                    <font-awesome-icon :icon="{ prefix: 'fa', iconName: 'envelope' }" />
                 </div>
             </a>
             <a href="https://discord.gg/w23cY5dH" target="_blank">
@@ -14,7 +14,7 @@
                     lightmode ? {color: '#201c2b !important'} : {color: '#c32aff !important'}
                     ]"
                 >
-                    <font-awesome-icon class="loader" :icon="{ prefix: 'fab', iconName: 'discord' }" />
+                    <font-awesome-icon :icon="{ prefix: 'fab', iconName: 'discord' }" />
                 </div>
             </a>
         </div>

@@ -5,60 +5,67 @@
   >
     <Nav :lightmode="lightmode"/>
     <div id="pannel-inner">
-      <div class="spacer-1"></div>
-      <entry :lightmode="lightmode"/>
-      <div class="message-wrap">
-        <div class="message lightmode-text">
-          New to Crypto? 
-        </div>
-        <div class="onboard-wrap" :style="[
-            lightmode ? {color: '#201c2b !important'} : {color: '#c32aff !important'}
-            ]">
-          <font-awesome-icon icon="external-link-alt" size="xs"/>
-        </div>
-      </div>
-      <div class="spacer-1">
-        <div class="message-wrap error-msg error-msg-1 fade-in" v-if="noWeb3">
-          <div class="message lightmode-text">
-            Looks like you don't the <a href="https://metamask.io/" target="_blank" :style="[
-              lightmode ? {color: '#201c2b'} : {color: '#c32aff'}
-            ]">Metamask</a> extension installed.
-          </div>
-        </div>
-        <div class="message-wrap error-msg fade-in" v-if="noWeb3">
-          <div class="message lightmode-text">
-            For support, please reach out via <a href="mailto:geriatricsgaming@gmail.com" target="_blank" :style="[
-              lightmode ? {color: '#201c2b'} : {color: '#c32aff'}
-            ]">Email</a> or discord.
-          </div>
-        </div>
-      </div>
+      <div class="spacer"></div>
+      <App />
+      <Cta :lightmode="lightmode" />
+      <ErrorMessages :lightmode="lightmode" />
     </div>
   </div>
 </template>
 
 <script>
-import entry from './Entry.vue'
+import Cta from './Cta.vue'
+import App from './App.vue'
+import ErrorMessages from './ErrorMessages.vue'
 import Nav from './Header.vue'
 
 export default {
   components: {
-    entry,
-    Nav
+    App,
+    Nav,
+    ErrorMessages,
+    Cta
   },
   data () {
     return {
-      lightmode: false,
-      noWeb3: false
+      lightmode: this.$store.state.lightmode,
+      token: '',
+      channelId: '',
+      clientId: 'ijc79hccu6xftlc6uryuqlwwsbl6va',
+      extensionVersion: '0.0.1',
+      baseUrl: 'https://api.twitch.tv/extensions',
+      signedToken: ''
+
     }
   },
-    created () {
-      this.unsubscribe = this.$store.subscribe((mutation, state) => {
-        if (mutation.type === 'noEthereumError') {
-            this.noWeb3 = state.errors.ethereumError
+  async beforeMount () {
+    await window.Twitch.ext.onAuthorized((auth) => {
+      this.token = auth.token
+      this.channelId = auth.channelId
+      this.clientId = auth.clientId
+      //window.Twitch.ext.rig.log('The JWT that will be passed to the EBS is', auth.token);
+      //window.Twitch.ext.rig.log('The channel ID is', auth.channelId);
+      this.sendToken()
+    })
+  },
+  methods: {
+    sendToken() {
+      try {
+        //const data = {'hello': 'world'}
+        this.axios.get('http://localhost:3000/chat', {
+        headers: {
+          Authorization: 'Bearer ' + this.token,
+          'Content-Type': 'application/json'
         }
-      })
-    },
+        }).then(res => {
+          window.Twitch.ext.rig.log(res)
+        })
+      } catch (e) {
+        console.log(e)
+      }
+    }
+  }
+
 }
 </script>
 
@@ -90,22 +97,7 @@ export default {
     font-size: 0.85em;
     color: #e5e3e8;
   }
-  .onboard-wrap {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-
-  }
-  .error-msg {
-    font-size: 80%;
-    padding: 1em;
-  }
-  .error-msg-1 {
-    display: inline-block;
-    padding-top: 1em;
-    transition: all 10s linear;
-  }
-  .spacer-1 {
+  .spacer {
     width: 100%;
     height: 100%;
     display: inline-flex;
@@ -169,5 +161,14 @@ export default {
     100% {
       opacity:1;
     }
+  }
+  /* loader styles */
+  .loader {
+    animation: spin 2s linear infinite;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
   }
 </style>

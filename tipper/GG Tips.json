@@ -1,0 +1,124 @@
+{
+  "allowHttpBackend": false,
+  "backendCommand": "node backend.js",
+  "backendFolderName": "/Users/macuser/Desktop/code/gg/ebs/services",
+  "certificateExceptions": [
+    {
+      "isAllowed": true,
+      "isEphemeral": false,
+      "isOrigin": true,
+      "value": "https://10.0.0.238:8080"
+    },
+    {
+      "isAllowed": true,
+      "isEphemeral": false,
+      "isOrigin": false,
+      "value": "wss://10.0.0.238:8080/sockjs-node/198/5f5z53rl/websocket"
+    },
+    {
+      "isAllowed": false,
+      "isEphemeral": false,
+      "isOrigin": false,
+      "value": "wss://10.0.0.238:8080/sockjs-node/379/bz1zf0o2/websocket"
+    }
+  ],
+  "extensionViews": [
+    {
+      "channelId": "608196064",
+      "configurationAnchor": "panel",
+      "displayChannelName": "mjavala",
+      "features": {
+        "isBitsEnabled": false,
+        "isChatEnabled": false,
+        "isSubscriptionStatusAvailable": false
+      },
+      "frameSize": {
+        "width": 1280,
+        "height": 720
+      },
+      "id": "1",
+      "isPopout": false,
+      "label": "",
+      "linked": false,
+      "linkedUserId": "",
+      "orientation": "Portrait",
+      "type": "panel",
+      "viewerType": "Broadcaster"
+    },
+    {
+      "channelId": "608196064",
+      "configurationAnchor": "panel",
+      "displayChannelName": "mjavala",
+      "features": {
+        "isBitsEnabled": false,
+        "isChatEnabled": false,
+        "isSubscriptionStatusAvailable": false
+      },
+      "frameSize": {
+        "width": 1280,
+        "height": 720
+      },
+      "id": "2",
+      "isPopout": false,
+      "label": "",
+      "linked": true,
+      "linkedUserId": "265737932",
+      "orientation": "Portrait",
+      "type": "config",
+      "viewerType": "Broadcaster"
+    }
+  ],
+  "manifest": {
+    "anchor": "panel",
+    "assetUrls": [],
+    "authorName": "",
+    "bitsEnabled": false,
+    "canInstall": true,
+    "configUrl": "http://localhost:8080/config.html",
+    "configurationLocation": "hosted",
+    "description": "",
+    "eulaTosUrl": "",
+    "hasChatSupport": true,
+    "iconUrl": "",
+    "iconUrls": {},
+    "id": "ijc79hccu6xftlc6uryuqlwwsbl6va",
+    "installationCount": -42,
+    "liveConfigUrl": "",
+    "name": "GG Tips",
+    "panelHeight": 496,
+    "privacyPolicyUrl": "",
+    "requestIdentityLink": false,
+    "requiredBroadcasterAbilities": [],
+    "screenshotUrls": [],
+    "sku": "",
+    "state": "Testing",
+    "subscriptionsSupportLevel": "none",
+    "summary": "GeriatricsGaming (GG) Tips: A Crypto Tip bot built on the lightning fast Harmony network.",
+    "supportEmail": "geriatricsgaming@gmail.com",
+    "vendorCode": "",
+    "version": "0.0.1",
+    "viewerSummary": "",
+    "viewerUrl": "http://localhost:8080/panel.html",
+    "viewerUrls": {
+      "panel": "http://localhost:8080/panel.html"
+    },
+    "views": {
+      "panel": {
+        "viewerUrl": "http://localhost:8080/panel.html",
+        "height": 496,
+        "canLinkExternalContent": false
+      },
+      "config": {
+        "viewerUrl": "http://localhost:8080/config.html",
+        "canLinkExternalContent": false
+      }
+    },
+    "whitelistedConfigUrls": [],
+    "whitelistedPanelUrls": []
+  },
+  "frontendCommand": "npm run dev",
+  "frontendFolderName": "/Users/macuser/Desktop/code/gg/tipper",
+  "name": "GG Tips",
+  "usingRandomFrontendHostingPort": false,
+  "version": 3
+}

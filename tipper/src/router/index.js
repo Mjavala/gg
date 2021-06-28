@@ -1,14 +1,21 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../components/Panel.vue'
+import Panel from '../components/Panel.vue'
+import Config from '../components/Config.vue'
+
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
+    path: '/panel.html',
     name: 'Panel',
-    component: Home
+    component: Panel
+  },
+  {
+    path: '/config.html',
+    name: 'Config',
+    component: Config
   },
 ]
 
