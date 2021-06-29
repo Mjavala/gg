@@ -30,14 +30,13 @@ var sig
 
 // POST: chat message, notice of a tip 
 app.get("/chat", cors(), (req, res) => {
+  console.log('message recieved')
   sig = signAndVerify(req)
   payload = JSON.stringify({
       'text': 'Testing Live Server'
   });
   sendChatMessage(payload, sig)
-  res.headers = {
 
-  }
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader('Access-Control-Allow-Methods', '*');
   res.setHeader("Access-Control-Allow-Headers", "*");
