@@ -40,8 +40,6 @@ app.get("/chat", cors(), (req, res) => {
   res.setHeader('Access-Control-Allow-Methods', '*');
   res.setHeader("Access-Control-Allow-Headers", "*");
   res.end();
-  res.send('hello world')
-
 });
 
 app.options('/options', function (req, res) {
