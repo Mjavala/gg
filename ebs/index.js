@@ -2,10 +2,10 @@ const jsonwebtoken = require('jsonwebtoken');
 const request = require('request')
 var express = require("express");
 const cors = require("cors");
-const serverless = require('serverless-http');
 
 var app = express();
 var port = 3000;
+var host = '0.0.0.0'
 // Express Step 2: Adding body parser to help parse the incoming request
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
@@ -28,28 +28,6 @@ let channel_id
 var sig
 
 
-
-
-// CORS: security layer, allow to run external javascript 
-app.use((req, res, next) => {
-    // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', '*');
-
-    // Request methods you wish to allow
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-
-    // Request headers you wish to allow
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-
-    // Set to true if you need the website to include cookies in the requests sent
-    // to the API (e.g. in case you use sessions)
-    res.setHeader('Access-Control-Allow-Credentials', true);
-
-    // Pass to next layer of middleware
-    next();
-});
-
-
 // POST: chat message, notice of a tip 
 app.get("/chat", (req, res) => {
   sig = signAndVerify(req)
@@ -60,7 +38,7 @@ app.get("/chat", (req, res) => {
   res.headers = {
 
   }
-  return res
+  res.send('hello world')
 
 });
 
@@ -144,23 +122,9 @@ function signAndVerify(req) {
 
 
 // Express STEP 3: Start Server 
-app.listen(port, () => {
+app.listen(host, port, () => {
  console.log("Server listening on port " + port);
 });
-
-module.exports.handler = serverless(app, { 
-    callbackWaitsForEmptyEventLoop: false,
-    response: function(response, event, context) {
-      return {
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-          "Access-Control-Allow-Credentials": true,
-        }
-      }
-    }
-  });
-
-
 
 // JWT Step 3: Verify
 // Verify the header and the enclosed JWT.

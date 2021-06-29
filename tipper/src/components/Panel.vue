@@ -35,7 +35,7 @@ export default {
       extensionVersion: '0.0.1',
       baseUrl: 'https://api.twitch.tv/extensions',
       signedToken: '',
-      serverUrl: 'https://3gvh9n0z9f.execute-api.us-east-1.amazonaws.com/dev'
+      serverUrl: 'https://talkuppity.tk'
 
     }
   },
