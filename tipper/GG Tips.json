@@ -1,6 +1,6 @@
 {
   "allowHttpBackend": false,
-  "backendCommand": "node backend.js",
+  "backendCommand": ".js",
   "backendFolderName": "/Users/macuser/Desktop/code/gg/ebs/services",
   "certificateExceptions": [
     {
@@ -75,7 +75,7 @@
     "bitsEnabled": false,
     "canInstall": true,
     "configUrl": "http://localhost:8080/config.html",
-    "configurationLocation": "hosted",
+    "configurationLocation": "custom",
     "description": "",
     "eulaTosUrl": "",
     "hasChatSupport": true,

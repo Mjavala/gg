@@ -34,7 +34,8 @@ export default {
       clientId: 'ijc79hccu6xftlc6uryuqlwwsbl6va',
       extensionVersion: '0.0.1',
       baseUrl: 'https://api.twitch.tv/extensions',
-      signedToken: ''
+      signedToken: '',
+      serverUrl: 'https://3gvh9n0z9f.execute-api.us-east-1.amazonaws.com/dev'
 
     }
   },
@@ -45,6 +46,7 @@ export default {
       this.clientId = auth.clientId
       //window.Twitch.ext.rig.log('The JWT that will be passed to the EBS is', auth.token);
       //window.Twitch.ext.rig.log('The channel ID is', auth.channelId);
+      console.log('onauthorized...')
       this.sendToken()
     })
   },
@@ -52,7 +54,7 @@ export default {
     sendToken() {
       try {
         //const data = {'hello': 'world'}
-        this.axios.get('http://localhost:3000/chat', {
+        this.axios.get(`${this.serverUrl}/chat`, {
         headers: {
           Authorization: 'Bearer ' + this.token,
           'Content-Type': 'application/json'
