@@ -53,7 +53,7 @@ app.options('/options', function (req, res) {
 
 // req holds broadcaster address, it is then set in the twitch local store for the frontend to access
 // Only fires once on load
-app.post("/config", (req, res) => {
+app.post("/config", cors(), (req, res) => {
   sig = signAndVerify(req)
   setExtensionSegmenet(sig, req.body)
   return res

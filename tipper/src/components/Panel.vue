@@ -60,10 +60,10 @@ export default {
           'Content-Type': 'application/json'
         }
         }).then(res => {
-          window.Twitch.ext.rig.log(res)
+          console.log(res)
         })
       } catch (e) {
-        console.log(e)
+        console.log(e.message)
       }
     }
   }
