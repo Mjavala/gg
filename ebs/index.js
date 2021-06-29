@@ -29,7 +29,7 @@ var sig
 
 
 // POST: chat message, notice of a tip 
-app.get("/chat", (req, res) => {
+app.get("/chat", cors(), (req, res) => {
   sig = signAndVerify(req)
   payload = JSON.stringify({
       'text': 'Testing Live Server'
