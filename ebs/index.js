@@ -5,7 +5,6 @@ const cors = require("cors");
 
 var app = express();
 var port = 3000;
-var host = '0.0.0.0'
 // Express Step 2: Adding body parser to help parse the incoming request
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
@@ -132,7 +131,7 @@ function signAndVerify(req) {
 
 
 // Express STEP 3: Start Server 
-app.listen(host, port, () => {
+app.listen(port, () => {
  console.log("Server listening on port " + port);
 });
 
