@@ -42,9 +42,11 @@ export default {
     methods: {
         toggleDarkMode() {
             this.$store.commit('changeMode', false)
+            window.localStorage.setItem('lightmode', false)
         },
         toggleLightMode() {
             this.$store.commit('changeMode', true)
+            window.localStorage.setItem('lightmode', true)
         }
     }
 }

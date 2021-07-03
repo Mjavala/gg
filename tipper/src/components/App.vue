@@ -3,24 +3,19 @@
         <h1 class="title">GG Tips</h1>
         <transition name="fade" mode="out-in">
           <Connect key="1" v-if="!isConnected" />
-          <Select key="2" v-if="isConnected" />
-        </transition>
-        <transition name="fade" mode="out-in">
-          <SelectStreamer v-if="isConnected" />
+          <AppInner key="2" v-if="isConnected" />
         </transition>
     </div>
 </template>
 
 <script>
-import Select from './Select.vue'
-import SelectStreamer from './SelectStreamer.vue'
 import Connect from './web3/Connect.vue'
+import AppInner from './AppInner.vue'
 
 export default {
   components: {
     Connect,
-    Select,
-    SelectStreamer
+    AppInner
   },
   data() {
     return {

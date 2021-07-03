@@ -3,6 +3,15 @@
     <router-view/>
   </div>
 </template>
+<script>
+export default {
+  mounted() {
+    let mode = window.localStorage.getItem('lightmode')
+    mode = (mode === 'true');
+    this.$store.commit('changeMode', mode)
+  }
+}
+</script>
 
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Comfortaa&display=swap');

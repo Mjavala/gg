@@ -2,9 +2,9 @@
     <div id="select-streamer-wrap" :style="[
             lightmode ? {color: '#e5e3e8'} : {color: '#c32aff'}
             ]">
-        <div class="select-prompt">Select a streamer.</div>
+        <div class="select-prompt">Select a streamer</div>
         <select class="select" v-model="selected" :style="[
-            lightmode ? {borderColor: '#201c2b !important', color: '#201c2b'} : { borderColor: '#c32aff !important', color: '#c32aff'}
+            lightmode ? {borderColor: '#e5e3e8 !important', color: '#e5e3e8'} : { borderColor: '#c32aff !important', color: '#c32aff'}
             ]">
             <option :value="item" :key="index" v-for="(item, index) in items">{{item.name}}</option>
         </select>
@@ -46,7 +46,7 @@ export default {
 </script>
 
 <style>
-#select-streamer-wrap {
+#select-streamer-wrap, #select-wrap {
     padding-top: 2em;
     display: flex;
     justify-content: center;
@@ -65,9 +65,6 @@ select {
 .select-wrap {
   position: relative;
 }
-.select-prompt {
-    padding-bottom: 0.5em;
-}
 .select-wrap::after {
   content: "▼";
   font-size: 1rem;
@@ -81,7 +78,7 @@ select {
   display: flex;
   background: transparent;
   overflow: hidden;
-  padding: 1em;
+  padding: 1em 1em 0.75em 0.25em;
   width: 10em;
   border-top: 0px;
   border-right: 0px;

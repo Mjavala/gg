@@ -35,7 +35,6 @@ export default {
         async getTokenBalance(ether){
             this.provider = new ethers.providers.Web3Provider(window.ethereum)
           if (ether) {
-            console.log(this.provider.provider.selectedAddress)
             let balance
             try {
                 balance = await this.provider.getBalance(this.provider.provider.selectedAddress)
@@ -55,12 +54,9 @@ export default {
 
 <style>
     #balance-wrap {
-        padding-top: 1em;
+        padding-left: 3.5em;
         font-size: 0.6rem;
         opacity: 0.9;
-        display: flex;
-        justify-content: center;
-        align-items: center;
     }
     .balance {
         display: inline;
