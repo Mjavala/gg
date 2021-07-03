@@ -1,7 +1,7 @@
 <template>
     <div id="connect-wrap">
         <button id="connect-button" type="submit" class="outline purple-white" @click="connectHandler()" :style="[
-            lightmode ? {borderColor: '#e5e3e8'} : {borderColor: '#c32aff'}
+            lightmode ? {borderColor: '#e5e3e8'} : {borderColor: '#c32aff !important'}
             ]"
         >
         <div v-if="!loading" class="button-inner">
@@ -17,44 +17,47 @@
 </template>
 
 <script>
-import { ethers } from "ethers";
+import { initWeb3 } from '@/web3/init.js'
 import { HARMONY_MAINNET_PARAMS } from '@/constants/harmony.js'
-import { weiToEth, cleanupBigNUmbers } from '@/utils.js'
 
 export default {
     data () {
         return {
             lightmode: this.$store.state.lightmode,
             loading: false,
-            connecting: false,
             provider: {}
         }
+    },
+    created() {
+      this.$store.subscribe((mutation, state) => {
+        if (mutation.type === 'changeMode') {
+          this.lightmode = state.lightmode
+        }
+      })
     },
     methods: {
         async connectHandler() {
           this.loading = true
-          this.connecting = true
           this.connectStylesHandler()
           // ethers
           try {
-            await window.ethereum.enable()
+            await initWeb3(this)
           } catch (e) {
             this.$store.commit('noEthereumError', true)
             console.log(e)
             return
           }
-          this.provider = new ethers.providers.Web3Provider(window.ethereum)
-          //console.log(`0x${parseInt(Number(HARMONY_TESTNET_PARAMS.chainId, 2)).toString(16)}`)
-          let balance = await this.provider.getBalance(this.provider.provider.selectedAddress)
-          balance = cleanupBigNUmbers(weiToEth(parseInt(balance._hex, 16))).toFixed(1)
-
+        },
+        requestNetworkChange() {
           try {
             this.provider.provider.request({
               method: 'wallet_addEthereumChain',
               params: [HARMONY_MAINNET_PARAMS]
             })
+            return true
           } catch (e) {
             console.log(e)
+            return false
           }
         },
         connectStylesHandler() {

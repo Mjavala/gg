@@ -10,6 +10,10 @@ export default new Vuex.Store({
     },
     lightmode: true,
     broadcastAddress: '',
+    isConnected: false,
+    tokenBalance: 0,
+    selectedToken: '',
+    userAccount: ''
 
   },
   mutations: {
@@ -19,9 +23,20 @@ export default new Vuex.Store({
     changeBroadcastAddress(state, update) {
       state.broadcastAddress = update
     },
-  },
-  actions: {
-  },
-  modules: {
+    changeMode(state, update) {
+      state.lightmode = update
+    },
+    changeIsConnected(state, update) {
+      state.isConnected = update
+    },
+    changeTokenBalance(state, update) {
+      state.tokenBalance = update
+    },
+    changeSelectedToken(state, update) {
+      state.selectedToken = update
+    },
+    changeAccounts(state, update) {
+      state.userAccount = update
+    }
   }
 })

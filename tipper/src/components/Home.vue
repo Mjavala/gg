@@ -1,13 +1,14 @@
 <template>
   <div id="panel-root" :style="[
-    lightmode ? {backgroundColor: '#6441A4'} : {backgroundColor: '#201c2b'}
+    lightmode ? {backgroundColor: '#6441A4', transition: 'all 750ms linear'} : {backgroundColor: '#201c2b', transition: 'all 750ms linear'}
     ]"
   >
     <Nav :lightmode="lightmode"/>
     <div id="pannel-inner">
-      <div class="spacer"></div>
+      <div v-if="!isConnected" class="spacer"></div>
+      <div v-if="isConnected" class="spacer-1"></div>
       <App />
-      <Cta :lightmode="lightmode" />
+      <Cta v-if="!isConnected" :lightmode="lightmode" />
       <ErrorMessages :lightmode="lightmode" />
     </div>
   </div>
@@ -33,41 +34,21 @@ export default {
       channelId: '',
       clientId: 'ijc79hccu6xftlc6uryuqlwwsbl6va',
       extensionVersion: '0.0.1',
-      baseUrl: 'https://api.twitch.tv/extensions',
       signedToken: '',
-      serverUrl: 'https://talkuppity.tk'
-
+      serverUrl: 'https://talkuppity.tk',
+      isConnected: this.$store.state.isConnected
     }
   },
-  async beforeMount () {
-    await window.Twitch.ext.onAuthorized((auth) => {
-      this.token = auth.token
-      this.channelId = auth.channelId
-      this.clientId = auth.clientId
-      //window.Twitch.ext.rig.log('The JWT that will be passed to the EBS is', auth.token);
-      //window.Twitch.ext.rig.log('The channel ID is', auth.channelId);
-      console.log('onauthorized...')
-      this.sendToken()
-    })
-  },
-  methods: {
-    sendToken() {
-      try {
-        //const data = {'hello': 'world'}
-        this.axios.get(`${this.serverUrl}/chat`, {
-        headers: {
-          Authorization: 'Bearer ' + this.token,
-          'Content-Type': 'application/json'
-        }
-        }).then(res => {
-          console.log(res)
-        })
-      } catch (e) {
-        console.log(e.message)
+  created() {
+    this.$store.subscribe((mutation, state) => {
+      if (mutation.type === 'changeMode') {
+        this.lightmode = state.lightmode
       }
-    }
+      if(mutation.type === 'changeIsConnected'){
+        this.isConnected = state.isConnected
+      }
+    })
   }
-
 }
 </script>
 
@@ -77,6 +58,7 @@ export default {
     height: 100%;
     width: 100%;
     position: relative;
+    transition: background-color 1000ms linear;
   }
   #pannel-inner {
     display: flex;
@@ -118,6 +100,14 @@ export default {
     -moz-animation: fadeIn ease 4s;
     -o-animation: fadeIn ease 4s;
     -ms-animation: fadeIn ease 4s;
+  }
+  .spacer-1 {
+    width: 100%;
+    height: 50%;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 
   @keyframes fadeIn{

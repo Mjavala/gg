@@ -1,5 +1,20 @@
 <template>
     <div id="header-wrap">
+        <div id="theme-toggle">
+            <div class="mode-icons" @click="toggleDarkMode()" v-if="lightmode" :style="[
+                lightmode ? {color: '#201c2b !important'} : {color: '#c32aff !important'}
+                ]"
+            >
+                <font-awesome-icon :icon="{ prefix: 'fa', iconName: 'moon' }" />
+            </div>
+            <div class="mode-icons" @click="toggleLightMode()" v-if="!lightmode" :style="[
+                lightmode ? {color: '#201c2b !important'} : {color: '#c32aff !important'}
+                ]"
+            >
+                <font-awesome-icon  :icon="{ prefix: 'fa', iconName: 'sun' }" />
+            </div>
+        </div>
+        <div id="nav-spacer"></div>
         <div id="socials-wrap">
             <a href="mailto:geriatricsgaming@gmail.com" target="_blank">
                 <div :style="[
@@ -23,7 +38,15 @@
 
 <script>
 export default {
-    props: ['lightmode']
+    props: ['lightmode'],
+    methods: {
+        toggleDarkMode() {
+            this.$store.commit('changeMode', false)
+        },
+        toggleLightMode() {
+            this.$store.commit('changeMode', true)
+        }
+    }
 }
 </script>
 
@@ -38,7 +61,6 @@ export default {
         display: flex;
         justify-content: flex-end;
         align-items: center;
-        max-width: 318px;
     }
     #socials-wrap {
         display: flex;
@@ -46,5 +68,15 @@ export default {
         width: 25%;
         justify-content: space-evenly;
         align-items: center;
+    }
+    #nav-spacer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 65%;
+    }
+    .mode-icons {
+        cursor: pointer;
+        z-index: 10;
     }
 </style>

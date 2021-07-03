@@ -19,8 +19,6 @@
     height: 100vh;
     width: 100vw;
     /* twitch panel max */
-    max-width: 318px;
-    max-height: 496px;
     overflow: hidden;
   }
 </style>

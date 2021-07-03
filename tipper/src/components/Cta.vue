@@ -1,7 +1,7 @@
 <template>
         <div class="message-wrap">
             <div class="message">
-                New to Crypto? 
+                Streamer? 
             </div>
             <div class="onboard-wrap" :style="[
                 lightmode ? {color: '#201c2b !important'} : {color: '#c32aff !important'}
