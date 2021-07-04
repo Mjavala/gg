@@ -62,4 +62,15 @@ export default {
   .fade-leave-to {
       opacity: 0
   }
+  /* mobile landscape styles*/
+  @media screen and (orientation:landscape)
+  and (min-device-width: 640px) 
+  and (max-device-width: 869px)
+  and (min-device-height: 319px)
+  and (max-device-height: 450px) {
+    /* Your CSS Here*/
+    #entry-wrap {
+      padding-bottom: 2em;
+    }
+  }
 </style>

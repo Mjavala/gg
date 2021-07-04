@@ -18,7 +18,6 @@
 
 <script>
 import { initWeb3 } from '@/web3/init.js'
-import { HARMONY_MAINNET_PARAMS } from '@/constants/harmony.js'
 
 export default {
     data () {
@@ -46,18 +45,6 @@ export default {
             this.$store.commit('noEthereumError', true)
             console.log(e)
             return
-          }
-        },
-        requestNetworkChange() {
-          try {
-            this.provider.provider.request({
-              method: 'wallet_addEthereumChain',
-              params: [HARMONY_MAINNET_PARAMS]
-            })
-            return true
-          } catch (e) {
-            console.log(e)
-            return false
           }
         },
         connectStylesHandler() {

@@ -1,8 +1,8 @@
 <template>
     <div id="tip-input-wrap">
         <div id="tip-input-inner-wrap">
-            <input v-model="input" type="number" :style="[
-                lightmode ? {borderColor: '#e5e3e8', color: '#e5e3e8'} : {borderColor: '#c32aff !important', color: '#e5e3e8'}
+            <input id="tip-input" v-model="input" type="number" :style="[
+                lightmode ? {borderColor: '#e5e3e8', color: '#e5e3e8'} : {borderColor: '#c32aff', color: '#e5e3e8'}
                 ]"/>
         </div>
         <Balance />
@@ -18,19 +18,28 @@ export default {
     data() {
         return {
             input: 0,
-            lightmode: this.$store.state.lightmode
+            lightmode: this.$store.state.lightmode,
+            tokenBalance: 0
         }
     },
     created() {
       this.$store.subscribe((mutation, state) => {
-        if (mutation.type === 'changeMode') {
-          this.lightmode = state.lightmode
-        }
+        if (mutation.type === 'changeMode')  this.lightmode = state.lightmode
+        if (mutation.type === 'changeTokenBalance') this.tokenBalance = state.tokenBalance
       })
     },
     watch: {
         input(newVal) {
-
+            // input must be less or equal to token balance
+            if (this.tokenBalance >= newVal) {
+                const tipInput = document.getElementById('tip-input')
+                tipInput.classList.remove('input-error')
+                this.$store.commit('changeTipAmount', newVal)
+            }
+            else {
+                const tipInput = document.getElementById('tip-input')
+                tipInput.classList.add('input-error')
+            } 
         }
     }
 }
@@ -62,5 +71,8 @@ export default {
         border-radius: 22px;
         font-family: 'Comfortaa', cursive !important;
         outline: none;
+    }
+    .input-error {
+        border-color: red !important;
     }
 </style>

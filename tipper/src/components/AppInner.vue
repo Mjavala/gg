@@ -1,7 +1,7 @@
 <template>
     <div id="app-inner-wrap">
-        <Select />
         <SelectStreamer />
+        <Select />
         <div id="tip-amount-wrap">
             <TipInput />
             <SendTip />
@@ -13,7 +13,7 @@
 import Select from './Select.vue'
 import SelectStreamer from './SelectStreamer.vue'
 import TipInput from './TipInput.vue'
-import SendTip from './SendTIp.vue'
+import SendTip from './SendTip.vue'
 
 export default {
     components: {

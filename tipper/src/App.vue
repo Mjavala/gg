@@ -1,14 +1,24 @@
 <template>
-  <div id="app">
+  <div id="app" :style="[
+    lightmode ? {backgroundColor: '#6441A4', transition: 'all 750ms linear'} : {backgroundColor: '#201c2b', transition: 'all 750ms linear'}
+    ]">
     <router-view/>
   </div>
 </template>
 <script>
 export default {
-  mounted() {
+  data() {
+    return {
+      lightmode: null
+    }
+  },
+  created() {
     let mode = window.localStorage.getItem('lightmode')
-    mode = (mode === 'true');
-    this.$store.commit('changeMode', mode)
+    this.lightmode = (mode === 'true');
+    this.$store.commit('changeMode', this.lightmode)
+    this.$store.subscribe((mutation, state) => {
+      if (mutation.type === 'changeMode') this.lightmode = state.lightmode
+    })
   }
 }
 </script>
@@ -28,6 +38,6 @@ export default {
     height: 100vh;
     width: 100vw;
     /* twitch panel max */
-    overflow: hidden;
+    overflow-y: scroll;
   }
 </style>

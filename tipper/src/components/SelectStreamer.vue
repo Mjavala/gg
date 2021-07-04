@@ -19,7 +19,7 @@ export default {
             items: [
                 {
                     name: 'Streamer1',
-                    address: 'wanted'
+                    address: '0x538f14c190ba4B81A6f3CfBfD8dE470e5293ba3A'
                 },
                 {
                     name: 'Streamer2',
@@ -38,7 +38,7 @@ export default {
     },
     watch: {
       selected(newVal, oldVal) {
-        if (newVal !== oldVal) this.$store.commit('changeSelectedToken', newVal.address)
+        if (newVal !== oldVal) this.$store.commit('changeSelectedStreamer', newVal.address)
       }
     }
     

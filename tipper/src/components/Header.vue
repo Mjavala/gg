@@ -63,6 +63,7 @@ export default {
         display: flex;
         justify-content: flex-end;
         align-items: center;
+        z-index: 15;
     }
     #socials-wrap {
         display: flex;

@@ -16,36 +16,40 @@ export default {
     data () {
         return {
             tokenBalance: this.$store.state.tokenBalance,
-            tokenSymbol: this.$store.state.selectedToken,
+            selectedToken: this.$store.state.selectedToken,
             lightmode: this.$store.state.lightmode
         }
     },
     created (){
         this.$store.subscribe((mutation, state) => {
-        if (mutation.type === 'changeSelectedToken') {
-            this.tokenSymbol = state.selectedToken
-        }
-        if (mutation.type === 'changeAccounts') this.getTokenBalance(true)
+            if (mutation.type === 'changeSelectedToken') this.selectedToken = state.selectedToken
         })
     },
-    async mounted () {
-        await this.getTokenBalance(true)
+    watch: {
+        async selectedToken(newVal) {
+            setInterval(async () => {
+                await this.getTokenBalance(newVal)            
+            }, 1000);
+        }
     },
     methods: {
-        async getTokenBalance(ether){
+        async getTokenBalance(token){
             this.provider = new ethers.providers.Web3Provider(window.ethereum)
-          if (ether) {
             let balance
-            try {
-                balance = await this.provider.getBalance(this.provider.provider.selectedAddress)
-            } catch(e) {
-                console.log(e)
+            if (token.name === 'ONE') {     // native token
+                try {
+                    balance = await this.provider.getBalance(this.provider.provider.selectedAddress)
+                } catch(e) {
+                    console.log(e)
+                }
+                // CAN BE TAKEN OUT ONCE GG IS IMPLEMENTED
+                balance = weiToEth(parseInt(balance._hex, 16))
+                this.tokenBalance = balance
+                this.$store.commit('changeTokenBalance', this.tokenBalance)
+            } else {
+                // HRC20 TOKEN
+                console.log('HRC20 TOKEN...')
             }
-            balance = cleanupBigNUmbers(weiToEth(parseInt(balance._hex, 16))).toFixed(1)
-            this.tokenBalance = balance
-          } else {
-            return
-          }
         },
     }
     

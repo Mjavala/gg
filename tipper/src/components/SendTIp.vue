@@ -17,12 +17,18 @@
 </template>
 
 <script>
+import { ethers } from "ethers";
 export default {
     data () {
         return {
             conditionsMet: true,
             lightmode: this.$store.state.lightmode,
             loading: false,
+            // tip config
+            selectedStreamer: '',    // address
+            selectedToken: '',       //address
+            tipAmount: 0,
+
         }
     },
     computed: {
@@ -31,15 +37,35 @@ export default {
         }
     },
     created() {
-      this.$store.subscribe((mutation, state) => {
-        if (mutation.type === 'changeMode') {
-          this.lightmode = state.lightmode
-        }
-      })
+        this.$store.subscribe((mutation, state) => {
+            if (mutation.type === 'changeMode') this.lightmode = state.lightmode
+            if (mutation.type === 'changeSelectedStreamer') this.selectedStreamer = state.selectedStreamer
+            if (mutation.type === 'changeSelectedToken') this.selectedToken = state.selectedToken
+            if (mutation.type === 'changeTipAmount') this.tipAmount = state.tipAmount
+        })
     },
     methods: {
-        sendHandler(){
-            console.log('sending...')
+        async sendHandler(){
+            if (!ethers.utils.isAddress(this.selectedStreamer)) {
+                console.log('invalid streamer address')
+                return
+            }
+            const provider = new ethers.providers.Web3Provider(window.ethereum)
+            const signer = provider.getSigner()
+            const account = provider.provider.selectedAddress
+            if (this.selectedToken.name === 'ONE') {
+                // native token
+                const val = ethers.utils.parseEther(String(this.tipAmount))
+                try {
+                    this.loading = true
+                    await signer.sendTransaction({ to: this.selectedStreamer, from: account, value: val })
+                    this.loading = false
+                } catch (e) {
+                    console.log(e)
+                }
+            } else {
+                // HRC20 Token
+            }
         }
     }
 }

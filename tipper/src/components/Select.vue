@@ -19,7 +19,7 @@ export default {
             items: [
                 {
                     name: 'ONE',
-                    address: 'wanted'
+                    address: null // native token
                 },
                 {
                     name: 'GG',
@@ -38,7 +38,7 @@ export default {
     },
     watch: {
       selected(newVal, oldVal) {
-        if (newVal !== oldVal) this.$store.commit('changeSelectedToken', newVal.address)
+        if (newVal !== oldVal)  this.$store.commit('changeSelectedToken', newVal)
       }
     }
     

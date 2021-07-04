@@ -12,8 +12,11 @@ export default new Vuex.Store({
     broadcastAddress: '',
     isConnected: false,
     tokenBalance: 0,
+    tipAmount: 0,
     selectedToken: '',
-    userAccount: ''
+    userAccount: '',
+    selectedStreamer: '',
+    incorrectNetwork: false
 
   },
   mutations: {
@@ -35,8 +38,17 @@ export default new Vuex.Store({
     changeSelectedToken(state, update) {
       state.selectedToken = update
     },
+    changeSelectedStreamer(state, update) {
+      state.selectedStreamer = update
+    },
     changeAccounts(state, update) {
       state.userAccount = update
+    },
+    changeTipAmount(state, update) {
+      state.tipAmount = update
+    },
+    incorrectNetwork(state, update) {
+      state.incorrectNetwork = update
     }
   }
 })
