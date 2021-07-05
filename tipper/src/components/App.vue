@@ -1,6 +1,8 @@
 <template>
-    <div id="entry-wrap">
-        <h1 class="title">GG Tips</h1>
+    <div id="entry-wrap" :style="[
+      lightmode ? {backgroundColor: 'rgb(100, 65, 164, 0.5)', transition: 'all 750ms linear'} : {backgroundColor: 'rgb(32,28,43, 0.5)', transition: 'all 750ms linear'}
+    ]">
+        <h1 class="title"><img id="gg" src="@/assets/gg.png" alt="">Tips</h1>
         <transition name="fade" mode="out-in">
           <Connect key="1" v-if="!isConnected" />
           <AppInner key="2" v-if="isConnected" />
@@ -20,19 +22,23 @@ export default {
   data() {
     return {
       isConnected: this.$store.state.isConnected,
+      lightmode: this.$store.state.lightmode
     }
   },
   created (){
     this.$store.subscribe((mutation, state) => {
-      if(mutation.type === 'changeIsConnected'){
-        this.isConnected = state.isConnected
-      }
+      if(mutation.type === 'changeIsConnected') this.isConnected = state.isConnected
+      if (mutation.type === 'changeMode') this.lightmode = state.lightmode
     })
   }
 }
 </script>
 
 <style scoped>
+  #entry-wrap {
+    padding: 1em;
+    border-radius: 25px;
+  }
   .title {
     margin: 0;
     width: 100%;
@@ -40,6 +46,9 @@ export default {
     max-height: max-content;
     padding: 3% 0;
     color: #e5e3e8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   .dark-border {
       border-color: #201c2b !important;
@@ -61,6 +70,10 @@ export default {
   .fade-enter,
   .fade-leave-to {
       opacity: 0
+  }
+  #gg {
+    max-height: 1.5em;
+    padding-right: 0.25em;
   }
   /* mobile landscape styles */
   @media screen and (orientation:landscape)

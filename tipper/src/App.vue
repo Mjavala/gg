@@ -3,10 +3,15 @@
     lightmode ? {backgroundColor: '#6441A4', transition: 'all 750ms linear'} : {backgroundColor: '#201c2b', transition: 'all 750ms linear'}
     ]">
     <router-view/>
+    <Hex />
   </div>
 </template>
 <script>
+import Hex from '@/components/HexAnimation.vue'
 export default {
+  components: {
+    Hex
+  },
   data() {
     return {
       lightmode: null

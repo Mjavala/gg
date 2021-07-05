@@ -124,5 +124,19 @@ export default {
         #socials-wrap {
             width: 20%;
         }
+        .mode-icon {
+            width: 24px !important;
+            height: 20px !important;
+        }
+    }
+    /* desktop  styles */
+    @media screen and (min-width: 1600px) {
+        .mode-icon {
+            width: 26px !important;
+            height: 22px !important;
+        }
+        #header-wrap {
+            height: 75px;
+        }
     }
 </style>

@@ -69,6 +69,8 @@ export default {
     max-width: 100%;
     height: 100%;
     padding: 0px 10px;
+    position: relative;
+    z-index: 10;
   }
   .message-wrap {
     padding: 7% 0;
