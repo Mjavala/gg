@@ -1,5 +1,7 @@
 # tipper
 
+Geriatrics Gaming Tips
+
 ## Project setup
 ```
 npm install
