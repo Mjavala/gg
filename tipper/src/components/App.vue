@@ -62,7 +62,7 @@ export default {
   .fade-leave-to {
       opacity: 0
   }
-  /* mobile landscape styles*/
+  /* mobile landscape styles */
   @media screen and (orientation:landscape)
   and (min-device-width: 640px) 
   and (max-device-width: 869px)
@@ -71,6 +71,13 @@ export default {
     /* Your CSS Here*/
     #entry-wrap {
       padding-bottom: 2em;
+    }
+  }
+  /* desktop  styles */
+  @media screen and (min-width: 1200px) {
+    .title {
+      padding-bottom: 0.75em;
+      font-size: 3.5em;
     }
   }
 </style>

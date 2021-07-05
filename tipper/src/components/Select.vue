@@ -44,3 +44,13 @@ export default {
     
 }
 </script>
+
+<style>
+  /* desktop  styles */
+  @media screen and (min-width: 1200px) {
+    .select-prompt {
+      font-size: 1.25em;
+    }
+  }
+
+</style>

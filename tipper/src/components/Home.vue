@@ -7,7 +7,7 @@
       <div v-if="!isConnected" class="spacer"></div>
       <div v-if="isConnected" class="spacer-1"></div>
       <App />
-      <Cta v-if="!isConnected" :lightmode="lightmode" />
+      <!--<Cta v-if="!isConnected" :lightmode="lightmode" /> -->
       <ErrorMessages :lightmode="lightmode" />
     </div>
     <Overlay v-if="incorrectNetwork"/>
@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import Cta from './Cta.vue'
+//import Cta from './Cta.vue'
 import App from './App.vue'
 import ErrorMessages from './ErrorMessages.vue'
 import Nav from './Header.vue'
@@ -26,7 +26,7 @@ export default {
     App,
     Nav,
     ErrorMessages,
-    Cta,
+    //Cta,
     Overlay
   },
   data () {
