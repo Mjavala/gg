@@ -3,16 +3,10 @@
         <img id="logo" src="@/assets/gg_logo.png" alt="">
         <div id="nav-spacer"></div>
         <div id="theme-toggle">
-            <div class="mode-icons" @click="toggleDarkMode()" v-if="lightmode" :style="[
-                lightmode ? {color: '#201c2b !important'} : {color: '#c32aff !important'}
-                ]"
-            >
+            <div class="mode-icons" @click="toggleDarkMode()" v-if="lightmode" :style=" {color: '#C0C0C0 !important'}">
                 <font-awesome-icon class="mode-icon" :icon="{ prefix: 'fa', iconName: 'moon' }" />
             </div>
-            <div class="mode-icons" @click="toggleLightMode()" v-if="!lightmode" :style="[
-                lightmode ? {color: '#201c2b !important'} : {color: '#c32aff !important'}
-                ]"
-            >
+            <div class="mode-icons" @click="toggleLightMode()" v-if="!lightmode" :style="{color: '#FFFF00 !important'}">
                 <font-awesome-icon  class="mode-icon" :icon="{ prefix: 'fa', iconName: 'sun' }" />
             </div>
         </div>

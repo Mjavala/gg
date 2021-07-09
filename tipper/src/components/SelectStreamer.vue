@@ -6,41 +6,54 @@
         <select class="select" v-model="selected" :style="[
             lightmode ? {borderColor: '#e5e3e8 !important', color: '#e5e3e8'} : { borderColor: '#c32aff !important', color: '#c32aff'}
             ]">
-            <option :value="item" :key="index" v-for="(item, index) in items">{{item.name}}</option>
+            <option :value="item" :key="index" v-for="(item, index) in streamersList">{{item.username}}</option>
         </select>
     </div>
 </template>
 
 <script>
+import gql from 'graphql-tag'
 export default {
-    data () {
-        return {
-            selected: 'Streamer1',
-            items: [
-                {
-                    name: 'Streamer1',
-                    address: '0x538f14c190ba4B81A6f3CfBfD8dE470e5293ba3A'
-                },
-                {
-                    name: 'Streamer2',
-                    address: 'wanted'
-                }
-            ],
-            lightmode: this.$store.state.lightmode
-        }
-    },
-    created() {
-      this.$store.subscribe((mutation, state) => {
-        if (mutation.type === 'changeMode') {
-          this.lightmode = state.lightmode
-        }
-      })
-    },
-    watch: {
-      selected(newVal, oldVal) {
-        if (newVal !== oldVal) this.$store.commit('changeSelectedStreamer', newVal.address)
+  data () {
+      return {
+          selected: 'Streamer1',
+          lightmode: this.$store.state.lightmode,
+          streamersList: []
+      }
+  },
+  // get streamers list query
+  apollo: {
+    streamersList: gql `query {
+      streamersList: streamers {
+        address
+        username
+        total_tipped
+        sub
+      }
+    }`
+  },
+  created() {
+    this.$store.subscribe((mutation, state) => {
+      if (mutation.type === 'changeMode') {
+        this.lightmode = state.lightmode
+      }
+    })
+    this.getStreamers()
+  },
+  methods: {
+    getStreamers() {
+      try {
+        this.$apollo.queries.streamersList
+      } catch (e) {
+        console.log(e)
       }
     }
+  },
+  watch: {
+    selected(newVal, oldVal) {
+      if (newVal !== oldVal) this.$store.commit('changeSelectedStreamer', newVal.address)
+    }
+  }
     
 }
 </script>

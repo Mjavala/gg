@@ -45,7 +45,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
     #tip-input-inner-wrap {
         width: 100%;
         display: flex;
@@ -62,7 +62,7 @@ export default {
     input[type=number] {
         -moz-appearance: textfield;
     }
-    input[type=number] {
+    input[type=number], input[type=text] {
         width: 75%;
         padding: 10px 19px;
         margin: 8px 0;

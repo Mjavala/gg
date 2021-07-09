@@ -29,9 +29,7 @@ export default {
     },
     created() {
       this.$store.subscribe((mutation, state) => {
-        if (mutation.type === 'changeMode') {
-          this.lightmode = state.lightmode
-        }
+        if (mutation.type === 'changeMode') this.lightmode = state.lightmode
       })
     },
     methods: {

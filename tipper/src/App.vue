@@ -43,6 +43,6 @@ export default {
     height: 100vh;
     width: 100vw;
     /* twitch panel max */
-    overflow-y: scroll;
+    overflow: hidden;
   }
 </style>

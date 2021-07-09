@@ -29,6 +29,7 @@ export default {
     //Cta,
     Overlay
   },
+  name: 'GG Tips',
   data () {
     return {
       lightmode: this.$store.state.lightmode,
@@ -41,6 +42,9 @@ export default {
       isConnected: this.$store.state.isConnected,
       incorrectNetwork: false
     }
+  },
+  mounted() {
+    document.title = 'Tips'
   },
   created() {
     this.$store.subscribe((mutation, state) => {

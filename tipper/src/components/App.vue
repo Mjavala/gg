@@ -7,17 +7,20 @@
           <Connect key="1" v-if="!isConnected" />
           <AppInner key="2" v-if="isConnected" />
         </transition>
+        <TwitchConnect />
     </div>
 </template>
 
 <script>
 import Connect from './web3/Connect.vue'
 import AppInner from './AppInner.vue'
+import TwitchConnect from './TwitchConnect.vue'
 
 export default {
   components: {
     Connect,
-    AppInner
+    AppInner,
+    TwitchConnect
   },
   data() {
     return {
