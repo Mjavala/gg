@@ -18,6 +18,8 @@
 
 <script>
 import { ethers } from "ethers";
+import gql from 'graphql-tag'
+
 export default {
     data () {
         return {
@@ -28,7 +30,6 @@ export default {
             selectedStreamer: '',    // address
             selectedToken: '',       //address
             tipAmount: 0,
-
         }
     },
     computed: {
@@ -45,8 +46,8 @@ export default {
         })
     },
     methods: {
-        async sendHandler(){
-            if (!ethers.utils.isAddress(this.selectedStreamer)) {
+        async sendHandler() {
+            if (!ethers.utils.isAddress(this.selectedStreamer.address)) {
                 console.log('invalid streamer address')
                 return
             }
@@ -58,7 +59,8 @@ export default {
                 const val = ethers.utils.parseEther(String(this.tipAmount))
                 try {
                     this.loading = true
-                    await signer.sendTransaction({ to: this.selectedStreamer, from: account, value: val })
+                    await signer.sendTransaction({ to: this.selectedStreamer.address, from: account, value: val })
+                    this.updateDB(this.selectedStreamer, this.tipAmount + this.selectedStreamer.total_tipped)
                     this.loading = false
                 } catch (e) {
                     console.log(e)
@@ -66,6 +68,19 @@ export default {
             } else {
                 // HRC20 Token
             }
+        },
+        updateDB(user, amount) {
+            this.apollo.mutate({
+                mutation: gql `mutation($username: String!, $tip: Number!) {
+                    update_streamers(where: username: {_eq: $username},  _set: {total_tipped: $tip}) {
+                        affected_rows
+                    }
+                }`,
+                variables: {
+                    username: user,
+                    tip: amount
+                },
+            })
         }
     }
 }

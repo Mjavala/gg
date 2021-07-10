@@ -16,7 +16,8 @@ export default new Vuex.Store({
     selectedToken: '',
     userAccount: '',
     selectedStreamer: '',
-    incorrectNetwork: false
+    incorrectNetwork: false,
+    streamersData: []
 
   },
   mutations: {
@@ -49,6 +50,9 @@ export default new Vuex.Store({
     },
     incorrectNetwork(state, update) {
       state.incorrectNetwork = update
+    },
+    changeStreamersData(state, update) {
+      state.streamersData = update
     }
   }
 })

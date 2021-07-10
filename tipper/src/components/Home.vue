@@ -20,6 +20,7 @@ import App from './App.vue'
 import ErrorMessages from './ErrorMessages.vue'
 import Nav from './Header.vue'
 import Overlay from './Overlay.vue'
+import gql from 'graphql-tag'
 
 export default {
   components: {
@@ -29,7 +30,6 @@ export default {
     //Cta,
     Overlay
   },
-  name: 'GG Tips',
   data () {
     return {
       lightmode: this.$store.state.lightmode,
@@ -40,7 +40,24 @@ export default {
       signedToken: '',
       serverUrl: 'https://talkuppity.tk',
       isConnected: this.$store.state.isConnected,
-      incorrectNetwork: false
+      incorrectNetwork: false,
+      streamersList: []
+    }
+  },
+  // apollo query
+  apollo: {
+    streamersList: gql `query {
+      streamersList: streamers {
+        address
+        username
+        total_tipped
+        sub
+      }
+    }`
+  },
+  watch: {
+    streamersList(newVal, oldVal) {
+      (newVal === oldVal) ? console.log('error getting streamers') : this.$store.commit('changeStreamersData', newVal)
     }
   },
   mounted() {
@@ -51,13 +68,21 @@ export default {
       if (mutation.type === 'changeMode') this.lightmode = state.lightmode
       if (mutation.type === 'changeIsConnected') this.isConnected = state.isConnected
       if (mutation.type === 'incorrectNetwork') this.incorrectNetwork = state.incorrectNetwork
-
     })
+    this.getStreamers()
   },
+  methods: {
+    getStreamers() {
+      try {
+        this.$apollo.queries.streamersList
+      } catch (e) {
+        console.log(e)
+      }
+    }
+  }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
   #panel-root {
     height: 100%;

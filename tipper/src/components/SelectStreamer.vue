@@ -6,52 +6,28 @@
         <select class="select" v-model="selected" :style="[
             lightmode ? {borderColor: '#e5e3e8 !important', color: '#e5e3e8'} : { borderColor: '#c32aff !important', color: '#c32aff'}
             ]">
-            <option :value="item" :key="index" v-for="(item, index) in streamersList">{{item.username}}</option>
+            <option :value="item" :key="index" v-for="(item, index) in items">{{item.username}}</option>
         </select>
     </div>
 </template>
 
 <script>
-import gql from 'graphql-tag'
 export default {
   data () {
       return {
           selected: 'Streamer1',
           lightmode: this.$store.state.lightmode,
-          streamersList: []
+          items: this.$store.state.streamersData.map(({ username, address }) => ({username, address}))
       }
-  },
-  // get streamers list query
-  apollo: {
-    streamersList: gql `query {
-      streamersList: streamers {
-        address
-        username
-        total_tipped
-        sub
-      }
-    }`
   },
   created() {
     this.$store.subscribe((mutation, state) => {
-      if (mutation.type === 'changeMode') {
-        this.lightmode = state.lightmode
-      }
+      if (mutation.type === 'changeMode') this.lightmode = state.lightmode
     })
-    this.getStreamers()
-  },
-  methods: {
-    getStreamers() {
-      try {
-        this.$apollo.queries.streamersList
-      } catch (e) {
-        console.log(e)
-      }
-    }
   },
   watch: {
     selected(newVal, oldVal) {
-      if (newVal !== oldVal) this.$store.commit('changeSelectedStreamer', newVal.address)
+      if (newVal !== oldVal) this.$store.commit('changeSelectedStreamer', newVal)
     }
   }
     

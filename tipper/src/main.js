@@ -2,16 +2,11 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+// fortawesome icons
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faExternalLinkAlt, faSpinner, faEnvelope, faMoon, faSun } from '@fortawesome/free-solid-svg-icons'
 import { faDiscord, faTwitch } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import axios from 'axios'
-import VueAxios from 'vue-axios'
-
-import ApolloClient from 'apollo-boost'
-import VueApollo from 'vue-apollo'
-
 library.add(faExternalLinkAlt)
 library.add(faSpinner)
 library.add(faDiscord)
@@ -20,22 +15,58 @@ library.add(faMoon)
 library.add(faSun)
 library.add(faTwitch)
 
+// GraphQL 
+import VueApollo from 'vue-apollo'
+import { ApolloClient } from 'apollo-client'
+import { createHttpLink } from 'apollo-link-http'
+import { InMemoryCache } from 'apollo-cache-inmemory'
+// apollo ws links
+import { split } from 'apollo-link'
+import { WebSocketLink } from 'apollo-link-ws'
+import { getMainDefinition } from 'apollo-utilities'
 
-const apolloClient = new ApolloClient({
+// HTTP connection to the API
+const httpLink = createHttpLink({
   // You should use an absolute URL here
   uri: 'https://www.talkuppity.tk/hasura/v1/graphql',
-  request: operation => {
-    operation.setContext({ headers: {'x-hasura-admin-secret': 'myadminsecretkey'}})
-  }
+  headers: {'x-hasura-admin-secret': 'myadminsecretkey'}
+})
+
+// Create the subscription websocket link
+const wsLink = new WebSocketLink({
+  uri: 'wss://www.talkuppity.tk/hasura/v1/graphql',
+  options: {
+    reconnect: true,
+    timeout: 300000,
+    connectionParams: () => {
+      return { headers: {'x-hasura-admin-secret': 'myadminsecretkey'} }
+    }
+  },
+})
+
+const link = split(
+  // split based on operation type
+  ({ query }) => {
+    const definition = getMainDefinition(query)
+    return definition.kind === 'OperationDefinition' &&
+      definition.operation === 'subscription'
+  },
+  wsLink,
+  apolloClient
+)
+
+// Create the apollo client
+const apolloClient = new ApolloClient({
+  link,
+  cache: new InMemoryCache(),
+  connectToDevTools: true,
 })
 
 const apolloProvider = new VueApollo({
   defaultClient: apolloClient,
 })
 
-
 Vue.component('font-awesome-icon', FontAwesomeIcon)
-Vue.use(VueAxios, axios)
 Vue.use(VueApollo)
 
 
