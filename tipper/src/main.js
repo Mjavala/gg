@@ -4,7 +4,7 @@ import router from './router'
 import store from './store'
 // fortawesome icons
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faExternalLinkAlt, faSpinner, faEnvelope, faMoon, faSun } from '@fortawesome/free-solid-svg-icons'
+import { faExternalLinkAlt, faSpinner, faEnvelope, faMoon, faSun, faHome } from '@fortawesome/free-solid-svg-icons'
 import { faDiscord, faTwitch } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 library.add(faExternalLinkAlt)
@@ -14,6 +14,8 @@ library.add(faEnvelope)
 library.add(faMoon)
 library.add(faSun)
 library.add(faTwitch)
+library.add(faHome)
+
 
 // GraphQL 
 import VueApollo from 'vue-apollo'
@@ -25,11 +27,21 @@ import { split } from 'apollo-link'
 import { WebSocketLink } from 'apollo-link-ws'
 import { getMainDefinition } from 'apollo-utilities'
 
+const getHeaders = () => {
+  const headers = {
+    'content-type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+    'x-hasura-access-key': 'myadminsecretkey'
+  }
+
+  return headers;
+};
+
 // HTTP connection to the API
 const httpLink = createHttpLink({
   // You should use an absolute URL here
   uri: 'https://www.talkuppity.tk/hasura/v1/graphql',
-  headers: {'x-hasura-admin-secret': 'myadminsecretkey'}
+  headers: getHeaders()
 })
 
 // Create the subscription websocket link
@@ -39,7 +51,7 @@ const wsLink = new WebSocketLink({
     reconnect: true,
     timeout: 300000,
     connectionParams: () => {
-      return { headers: {'x-hasura-admin-secret': 'myadminsecretkey'} }
+      return { headers: getHeaders() }
     }
   },
 })
@@ -52,7 +64,7 @@ const link = split(
       definition.operation === 'subscription'
   },
   wsLink,
-  apolloClient
+  httpLink
 )
 
 // Create the apollo client

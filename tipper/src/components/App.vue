@@ -8,6 +8,15 @@
           <AppInner key="2" v-if="isConnected" />
         </transition>
         <TwitchConnect />
+        <!-- leaderboards button -->
+        <button id="lb-button" type="submit" class="outline purple-white" @click="connectHandler()" :style="[
+            lightmode ? {borderColor: '#e5e3e8'} : {borderColor: '#c32aff !important'}
+            ]"
+        >
+          <router-link to="/leaderboards" class="button-inner">
+              Leaderboards
+          </router-link>
+        </button>
     </div>
 </template>
 

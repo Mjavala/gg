@@ -60,13 +60,16 @@ export default {
                 try {
                     this.loading = true
                     await signer.sendTransaction({ to: this.selectedStreamer.address, from: account, value: val })
-                    this.updateDB(this.selectedStreamer, this.tipAmount + this.selectedStreamer.total_tipped)
                     this.loading = false
                 } catch (e) {
                     console.log(e)
                 }
             } else {
                 // HRC20 Token
+                if (this.selectedToken.name === 'GG') {
+                    // only track GG
+                    this.updateDB(this.selectedStreamer, this.tipAmount + this.selectedStreamer.total_tipped)
+                }
             }
         },
         updateDB(user, amount) {

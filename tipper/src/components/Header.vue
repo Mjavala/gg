@@ -10,7 +10,14 @@
                 <font-awesome-icon  class="mode-icon" :icon="{ prefix: 'fa', iconName: 'sun' }" />
             </div>
         </div>
-        <div id="socials-wrap">
+        <div id="links-wrap">
+            <div id="home-link" v-if="notHome" :style="[
+                lightmode ? {color: '#201c2b !important'} : {color: '#c32aff !important'}
+            ]">
+                <router-link to="/">
+                    <font-awesome-icon class="mode-icon" :icon="{ prefix: 'fa', iconName: 'home' }" />
+                </router-link>
+            </div>
             <a href="mailto:geriatricsgaming@gmail.com" target="_blank">
                 <div :style="[
                     lightmode ? {color: '#201c2b !important'} : {color: '#c32aff !important'}
@@ -33,7 +40,20 @@
 
 <script>
 export default {
-    props: ['lightmode'],
+    data () {
+        return {
+            notHome: false,
+            lightmode: this.$store.state.lightmode
+        }
+    },
+    mounted () {
+        (this.$route.name === 'Home') ? this.notHome = false : this.notHome = true
+    },
+    created() {
+        this.$store.subscribe((mutation, state) => {
+            if (mutation.type === 'changeMode') this.lightmode = state.lightmode
+        })
+    },
     methods: {
         toggleDarkMode() {
             this.$store.commit('changeMode', false)
@@ -60,7 +80,7 @@ export default {
         align-items: center;
         z-index: 15;
     }
-    #socials-wrap {
+    #links-wrap {
         display: flex;
         height: 100%;
         width: 50%;
@@ -79,6 +99,11 @@ export default {
         left: -1em;
         max-height: 150%;
     }
+    #home-link {
+        cursor: pointer;
+        color: whitesmoke;
+        padding: 0 1em;
+    }
     .mode-icons {
         cursor: pointer;
         z-index: 10;
@@ -93,7 +118,7 @@ export default {
             left: -1em;
             max-height: 175%;
         }
-        #socials-wrap {
+        #links-wrap {
             width: 25%;
         }
     }
@@ -103,7 +128,7 @@ export default {
         }
     }
     @media screen and (min-width: 800px) {
-        #socials-wrap {
+        #links-wrap {
             width: 25%;
         }
     }
@@ -115,7 +140,7 @@ export default {
     }
     /* desktop  styles */
     @media screen and (min-width: 1200px) {
-        #socials-wrap {
+        #links-wrap {
             width: 20%;
         }
         .mode-icon {

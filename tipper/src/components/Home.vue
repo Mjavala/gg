@@ -2,7 +2,7 @@
   <div id="panel-root" :style="[
       lightmode ? {backgroundColor: '#6441A4', transition: 'all 750ms linear'} : {backgroundColor: '#201c2b', transition: 'all 750ms linear'}
   ]">
-    <Nav :lightmode="lightmode"/>
+    <Nav />
     <div id="pannel-inner">
       <div v-if="!isConnected" class="spacer"></div>
       <div v-if="isConnected" class="spacer-1"></div>

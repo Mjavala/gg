@@ -1,6 +1,6 @@
 <template>
     <div id="onboard-root">
-        <Nav :lightmode="lightmode"/>
+        <Nav />
         <div id="onboard-inner-wrap" :style="[
       lightmode ? {backgroundColor: 'rgb(100, 65, 164, 0.5)', transition: 'all 750ms linear'} : {backgroundColor: 'rgb(32,28,43, 0.5)', transition: 'all 750ms linear'}
     ]">
@@ -64,18 +64,11 @@ export default {
         this.addressInput = document.getElementById('address-input')
     },
     created() {
-        let token
-        try {
-            token = String(this.$route.hash).split('=')[1]
-        } catch (e) {
-            console.log(e)
-        }
-        token = jwt_decode(token)
-        this.username = token.preferred_username
-        this.userId = token.sub
         this.$store.subscribe((mutation, state) => {
             if (mutation.type === 'changeMode') this.lightmode = state.lightmode
         })
+        // decode token if exists
+        if (this.$route.hash !== '') this.decodeToken()
     },
     watch: {
         input(newVal) {
@@ -100,7 +93,19 @@ export default {
             this.user = !this.user
         },
         submitHandler() {
+            // insert mutation will go here
             console.log(this.address, this.user, this.streamer, this.username, this.userId)
+        },
+        decodeToken() {
+            let token
+            try {
+                token = String(this.$route.hash).split('=')[1]
+            } catch (e) {
+                console.log(e)
+            }
+            token = jwt_decode(token)
+            this.username = token.preferred_username
+            this.userId = token.sub
         }
     }
 }
