@@ -49,7 +49,7 @@ export default {
     },
     mounted() {
         this.$apollo.subscribe.subStreamers
-        document.title = Leaderboard
+        document.title = 'Leaderboard'
     },
     created() {
         this.$store.subscribe((mutation, state) => {

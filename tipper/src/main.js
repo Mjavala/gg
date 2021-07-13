@@ -33,7 +33,6 @@ const getHeaders = () => {
   const headers = {
     'content-type': 'application/json',
     'Access-Control-Allow-Origin': '*',
-    'x-hasura-access-key': 'myadminsecretkey'
   }
 
   return headers;
