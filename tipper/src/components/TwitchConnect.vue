@@ -27,7 +27,7 @@ export default {
             provider: {},
             clientId: 'vxm1klwoq5ak2ejir07vgk6i2nww7h',
             responseType: 'id_token',
-            redirectURI: 'https://gg-livid.vercel.app/onboard',
+            redirectURI: 'https://gg-livid.vercel.app/onboard/',
             scopes: 'openid',
             claims: {"userinfo": { "picture": null, "preferred_username": null }}
         }

@@ -26,7 +26,7 @@
                     <font-awesome-icon class="mode-icon" :icon="{ prefix: 'fa', iconName: 'envelope' }" />
                 </div>
             </a>
-            <a href="https://discord.gg/w23cY5dH" target="_blank">
+            <a href="https://discord.gg/geeGXBXWjn" target="_blank">
                 <div :style="[
                     lightmode ? {color: '#201c2b !important'} : {color: '#c32aff !important'}
                     ]"
