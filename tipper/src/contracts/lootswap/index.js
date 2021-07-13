@@ -1,0 +1,1 @@
+export const lootswapContractAddress = '0xbda99c8695986b45a0dd3979cc6f3974d9753d30'

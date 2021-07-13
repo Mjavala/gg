@@ -18,6 +18,8 @@
 
 <script>
 import { ethers } from "ethers";
+import abi from '@/contracts/lootswap/hrc20ABI.json'
+import { lootswapContractAddress } from '@/contracts/lootswap/index.js'
 import gql from 'graphql-tag'
 
 export default {
@@ -54,35 +56,42 @@ export default {
             const provider = new ethers.providers.Web3Provider(window.ethereum)
             const signer = provider.getSigner()
             const account = provider.provider.selectedAddress
+            const val = ethers.utils.parseEther(String(this.tipAmount))
             if (this.selectedToken.name === 'ONE') {
                 // native token
-                const val = ethers.utils.parseEther(String(this.tipAmount))
                 try {
                     this.loading = true
                     await signer.sendTransaction({ to: this.selectedStreamer.address, from: account, value: val })
                     this.loading = false
                 } catch (e) {
-                    console.log(e)
+                    console.trace(e)
                 }
             } else {
                 // HRC20 Token
                 if (this.selectedToken.name === 'GG') {
                     // only track GG
-                    this.updateDB(this.selectedStreamer, this.tipAmount + this.selectedStreamer.total_tipped)
+                    // const contract = new ethers.Contract(lootswapContractAddress, abi, signer)
+                    // await contract.transfer(this.selectedStreamer.address, val)
+                    this.updateDB(this.selectedStreamer, this.tipAmount + this.selectedStreamer.tips)
+                }
+                else if (this.selectedToken.name === 'LOOT') {
+                    const contract = new ethers.Contract(lootswapContractAddress, abi, signer)
+                    await contract.transfer(this.selectedStreamer.address, val)
+
                 }
             }
         },
         updateDB(user, amount) {
-            this.apollo.mutate({
-                mutation: gql `mutation($username: String!, $tip: Number!) {
-                    update_streamers(where: username: {_eq: $username},  _set: {total_tipped: $tip}) {
+            this.$apollo.mutate({
+                mutation: gql `mutation ($username: String!, $tip: numeric!) {
+                    update_streamers(where: {username: {_eq: $username}},  _set: {tips: $tip}) {
                         affected_rows
                     }
                 }`,
                 variables: {
                     username: user,
                     tip: amount
-                },
+                }
             })
         }
     }

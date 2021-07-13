@@ -1,11 +1,11 @@
 <template>
-    <div id="connect-wrap">
+    <div class="connect-wrap">
       <a :href="url">
         <button id="connect-twitch-button" type="submit" class="outline purple-white" :style="[
             lightmode ? {borderColor: '#e5e3e8'} : {borderColor: '#c32aff !important'}
             ]"
         >
-        <div v-if="!loading" class="button-inner">
+        <div v-if="!loading" class="button-inner-twitch">
             Login <font-awesome-icon class="mode-icon mode-icon-twitch" :icon="{ prefix: 'fab', iconName: 'twitch' }" />
         </div>
         <div id="twitch-button-wrap" class="button-inner" :style="[
@@ -72,4 +72,12 @@ export default {
 </script>
 
 <style>
+.mode-icon-twitch {
+  padding: 0 0.5em;
+  }
+.button-inner-twitch {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 </style>

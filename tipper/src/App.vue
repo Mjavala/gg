@@ -45,4 +45,15 @@ export default {
     /* twitch panel max */
     overflow: hidden;
   }
+  /* mobile landscape styles*/
+  @media screen and (orientation:landscape)
+  and (min-device-width: 640px) 
+  and (max-device-width: 869px)
+  and (min-device-height: 319px)
+  and (max-device-height: 450px) {
+    /* Your CSS Here*/
+    #app {
+      overflow-y: scroll;
+    }
+  }
 </style>

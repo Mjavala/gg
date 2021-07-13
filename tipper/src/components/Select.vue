@@ -15,15 +15,16 @@
 export default {
     data () {
         return {
-            selected: 'ONE',
+            selected: 'GG',
             items: [
                 {
-                    name: 'ONE',
-                    address: null // native token
+                  name: 'GG',
                 },
                 {
-                    name: 'GG',
-                    address: 'wanted'
+                  name: 'ONE',
+                },
+                {
+                  name: 'LOOT',
                 }
             ],
             lightmode: this.$store.state.lightmode

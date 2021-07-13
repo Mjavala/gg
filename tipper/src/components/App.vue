@@ -4,30 +4,20 @@
     ]">
         <h1 class="title"><img id="gg" src="@/assets/gg.png" alt="">Tips</h1>
         <transition name="fade" mode="out-in">
-          <Connect key="1" v-if="!isConnected" />
+          <AppIntro key="1" v-if="!isConnected" />
           <AppInner key="2" v-if="isConnected" />
         </transition>
-        <TwitchConnect />
-        <!-- leaderboards button -->
-        <button id="lb-button" type="submit" class="outline purple-white" @click="connectHandler()" :style="[
-            lightmode ? {borderColor: '#e5e3e8'} : {borderColor: '#c32aff !important'}
-            ]"
-        >
-          <router-link to="/leaderboards" class="button-inner">
-              Leaderboards
-          </router-link>
-        </button>
     </div>
 </template>
 
 <script>
-import Connect from './web3/Connect.vue'
+import AppIntro from './AppIntro.vue'
 import AppInner from './AppInner.vue'
 import TwitchConnect from './TwitchConnect.vue'
 
 export default {
   components: {
-    Connect,
+    AppIntro,
     AppInner,
     TwitchConnect
   },
@@ -50,6 +40,7 @@ export default {
   #entry-wrap {
     padding: 1em;
     border-radius: 25px;
+    position: relative
   }
   .title {
     margin: 0;
@@ -93,7 +84,6 @@ export default {
   and (max-device-width: 869px)
   and (min-device-height: 319px)
   and (max-device-height: 450px) {
-    /* Your CSS Here*/
     #entry-wrap {
       padding-bottom: 2em;
     }

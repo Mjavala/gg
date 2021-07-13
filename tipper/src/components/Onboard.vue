@@ -42,6 +42,7 @@
 import { ethers } from "ethers";
 import Nav from './Header.vue'
 import jwt_decode from "jwt-decode";
+import gql from 'graphql-tag'
 
 export default {
     components: {
@@ -56,7 +57,8 @@ export default {
             input: '',
             streamer: false,
             user: false,
-            address: ''
+            address: '',
+            errored: false
         }
     },
     mounted() {
@@ -69,6 +71,7 @@ export default {
         })
         // decode token if exists
         if (this.$route.hash !== '') this.decodeToken()
+        else this.errored = true
     },
     watch: {
         input(newVal) {
@@ -80,7 +83,7 @@ export default {
                 this.addressInput.classList.add('input-error')
                 return
             } else {
-                addressInput.classList.remove('input-error')
+                this.addressInput.classList.remove('input-error')
                 this.address = newVal
             }
         }
@@ -93,8 +96,40 @@ export default {
             this.user = !this.user
         },
         submitHandler() {
-            // insert mutation will go here
-            console.log(this.address, this.user, this.streamer, this.username, this.userId)
+            if (!ethers.utils.isAddress(this.address)) {
+                console.log('invalid streamer address')
+                return
+            }
+            if (this.errored) return
+
+            if (this.streamer) {
+                this.$apollo.mutate({
+                    mutation: gql `mutation ($username: String!, $sub: String!, $address: String!) {
+                        insert_streamers_one(object: {address: $address, sub: $sub, tips: 0, username: $username}) {
+                            id
+                        }
+                    }`,
+                    variables: {
+                        username: this.username,
+                        sub: this.userId,
+                        address: this.address
+                    }
+                })
+            }
+            if (this.user) {
+                this.$apollo.mutate({
+                    mutation: gql `mutation ($username: String!, $sub: String!, $address: String!) {
+                        insert_viewers_one(object: {address: $address, sub: $sub, rewards: 0, username: $username}) {
+                            id
+                        }
+                    }`,
+                    variables: {
+                        username: this.username,
+                        sub: this.userId,
+                        address: this.address
+                    }
+                })
+            }
         },
         decodeToken() {
             let token
@@ -131,17 +166,17 @@ export default {
     justify-content: space-evenly;
     align-items: center;
     width: max-content;
-    width: 50vw;
+    width: 80vw;
 }
 #onboard-tip-input-inner-wrap {
-    width: 50vw;
+    width: 80vw;
     display: flex;
     justify-content: center;
     align-items: center;
     padding-bottom: 1em;
 }
 .greeting {
-    font-size: 2.5rem;
+    font-size: 1.5rem;
     color: white;
     padding: 1em 0;
     display: flex;
@@ -149,7 +184,7 @@ export default {
     align-items: center;
 }
 .prompt {
-    font-size: 1.5rem;
+    font-size: 1rem;
     color: white;
     padding: 1em 0;
     display: flex;
@@ -158,5 +193,23 @@ export default {
 }
 .checkbox {
     margin-left: 1em;
+}
+/* Desktop Styles */
+@media screen and (min-width: 1200px) and (min-height: 768px) {
+    .greeting {
+        font-size: 2rem;
+    }
+    .prompt {
+        font-size: 1.5rem;
+    }
+    #onboard-tip-input-inner-wrap, #streamer-viewer-prompt {
+        width: 65vw;
+    }
+}
+/* Desktop Styles */
+@media screen and (min-width: 1900px) {
+    #onboard-tip-input-inner-wrap, #streamer-viewer-prompt {
+        width: 50vw;
+    }
 }
 </style>

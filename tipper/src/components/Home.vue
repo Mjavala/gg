@@ -50,7 +50,7 @@ export default {
       streamersList: streamers {
         address
         username
-        total_tipped
+        tips
         sub
       }
     }`

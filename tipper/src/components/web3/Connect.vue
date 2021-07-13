@@ -1,5 +1,5 @@
 <template>
-    <div id="connect-wrap">
+    <div class="connect-wrap">
         <button id="connect-button" type="submit" class="outline purple-white" @click="connectHandler()" :style="[
             lightmode ? {borderColor: '#e5e3e8'} : {borderColor: '#c32aff !important'}
             ]"
@@ -61,7 +61,7 @@ export default {
 
 <style>
   /* button styles */
-  #connect-wrap {
+  .connect-wrap {
     padding: 4% 0 0 0;
     display: flex;
     justify-content: center;

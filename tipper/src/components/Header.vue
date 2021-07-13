@@ -68,6 +68,7 @@ export default {
 </script>
 
 <style>
+    /* Mobile portrait styles & general styles */
     #header-wrap {
         position: absolute;
         top: 0;
@@ -101,8 +102,6 @@ export default {
     }
     #home-link {
         cursor: pointer;
-        color: whitesmoke;
-        padding: 0 1em;
     }
     .mode-icons {
         cursor: pointer;

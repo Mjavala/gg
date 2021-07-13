@@ -17,7 +17,7 @@ export default {
       return {
           selected: 'Streamer1',
           lightmode: this.$store.state.lightmode,
-          items: this.$store.state.streamersData.map(({ username, address }) => ({username, address}))
+          items: this.$store.state.streamersData.map(({ username, address, tips }) => ({username, address, tips}))
       }
   },
   created() {
@@ -27,6 +27,7 @@ export default {
   },
   watch: {
     selected(newVal, oldVal) {
+      console.log(newVal)
       if (newVal !== oldVal) this.$store.commit('changeSelectedStreamer', newVal)
     }
   }

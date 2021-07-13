@@ -4,7 +4,7 @@ import router from './router'
 import store from './store'
 // fortawesome icons
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faExternalLinkAlt, faSpinner, faEnvelope, faMoon, faSun, faHome } from '@fortawesome/free-solid-svg-icons'
+import { faExternalLinkAlt, faSpinner, faEnvelope, faMoon, faSun, faHome, faUndo } from '@fortawesome/free-solid-svg-icons'
 import { faDiscord, faTwitch } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 library.add(faExternalLinkAlt)
@@ -15,6 +15,8 @@ library.add(faMoon)
 library.add(faSun)
 library.add(faTwitch)
 library.add(faHome)
+library.add(faUndo)
+
 
 
 // GraphQL 
