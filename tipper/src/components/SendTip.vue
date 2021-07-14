@@ -19,7 +19,7 @@
 <script>
 import { ethers } from "ethers";
 import abi from '@/contracts/lootswap/hrc20ABI.json'
-import { lootswapContractAddress } from '@/contracts/lootswap/index.js'
+import { lootswapContractAddress, ggContractAddress } from '@/contracts/lootswap/index.js'
 import gql from 'graphql-tag'
 
 export default {
@@ -70,8 +70,8 @@ export default {
                 // HRC20 Token
                 if (this.selectedToken.name === 'GG') {
                     // only track GG
-                    // const contract = new ethers.Contract(lootswapContractAddress, abi, signer)
-                    // await contract.transfer(this.selectedStreamer.address, val)
+                    const contract = new ethers.Contract(ggContractAddress, abi, signer)
+                    await contract.transfer(this.selectedStreamer.address, val)
                     this.updateDB(this.selectedStreamer, this.tipAmount + this.selectedStreamer.tips)
                 }
                 else if (this.selectedToken.name === 'LOOT') {

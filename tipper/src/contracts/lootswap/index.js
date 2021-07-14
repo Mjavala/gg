@@ -1,1 +1,3 @@
 export const lootswapContractAddress = '0xbda99c8695986b45a0dd3979cc6f3974d9753d30'
+
+export const ggContractAddress = '0x463c684c0dc0a1163db5a9b57d9847efc28c418a'
