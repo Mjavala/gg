@@ -72,7 +72,8 @@ export default {
                     // only track GG
                     const contract = new ethers.Contract(ggContractAddress, abi, signer)
                     await contract.transfer(this.selectedStreamer.address, val)
-                    this.updateDB(this.selectedStreamer, this.tipAmount + this.selectedStreamer.tips)
+                    console.log(this.selectedStreamer)
+                    this.updateDB(this.selectedStreamer.username, this.tipAmount + this.selectedStreamer.tips)
                 }
                 else if (this.selectedToken.name === 'LOOT') {
                     const contract = new ethers.Contract(lootswapContractAddress, abi, signer)
