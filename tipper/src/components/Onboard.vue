@@ -2,12 +2,12 @@
     <div id="onboard-root">
         <Nav />
         <div id="onboard-inner-wrap" :style="[
-      lightmode ? {backgroundColor: 'rgb(100, 65, 164, 0.5)', transition: 'all 750ms linear'} : {backgroundColor: 'rgb(32,28,43, 0.5)', transition: 'all 750ms linear'}
-    ]">
-            <div class="greeting">
-                Hello {{this.username}}
+            lightmode ? {backgroundColor: 'rgb(100, 65, 164, 0.5)', transition: 'all 750ms linear'} : {backgroundColor: 'rgb(32,28,43, 0.5)', transition: 'all 750ms linear'}
+        ]">
+            <div v-if="!loading" class="greeting">
+                {{greeting}}
             </div>
-            <div id="streamer-viewer-prompt">
+            <div v-if="!loading" id="streamer-viewer-prompt">
                 <div class="prompt">
                     Streamer? <input class="checkbox" type="checkbox" @click="handleStreamer()" />
                 </div>
@@ -15,25 +15,26 @@
                     Viewer? <input class="checkbox" type="checkbox" @click="handleUser()" />
                 </div>
             </div>
-            <div id="onboard-tip-input-inner-wrap">
+            <div v-if="!loading" id="onboard-tip-input-inner-wrap">
                 <input id="address-input" v-model="input" type="text" class="onboard-input" placeholder="Enter your address" :style="[
                     lightmode ? {borderColor: '#e5e3e8', color: '#e5e3e8'} : {borderColor: '#c32aff', color: '#e5e3e8'}
                     ]"/>
             </div>
             <!--Submit data to backend  -->
-            <button id="connect-button" type="submit" class="outline purple-white" @click="submitHandler()" :style="[
+            <button v-if="!loading" id="connect-button" type="submit" class="outline purple-white" @click="submitHandler()" :style="[
                 lightmode ? {borderColor: '#e5e3e8'} : {borderColor: '#c32aff !important'}
                 ]"
             >
-            <div v-if="!loading" class="button-inner">
-                Submit
-            </div>
-            <div id="button-wrap" class="button-inner" :style="[
-                lightmode ? {color: '#e5e3e8'} : {color: '#c32aff'}
-                ]">
-                <font-awesome-icon class="loader" v-if="loading" icon="spinner" size="lg"/>
-            </div>
+                <div v-if="!loading" class="button-inner">
+                    Submit
+                </div>
+                <div id="button-wrap" class="button-inner" :style="[
+                    lightmode ? {color: '#e5e3e8'} : {color: '#c32aff'}
+                    ]">
+                    <font-awesome-icon class="loader" v-if="loading" icon="spinner" size="lg"/>
+                </div>
             </button>
+            <Loader v-if="loading" />
         </div>
     </div>
 </template>
@@ -43,10 +44,12 @@ import { ethers } from "ethers";
 import Nav from './Header.vue'
 import jwt_decode from "jwt-decode";
 import gql from 'graphql-tag'
+import Loader from './Loader.vue'
 
 export default {
     components: {
-        Nav
+        Nav,
+        Loader
     },
     data() {
         return {
@@ -58,7 +61,9 @@ export default {
             streamer: false,
             user: false,
             address: '',
-            errored: false
+            errored: false,
+            greeting: 'Hello',
+            loading: false
         }
     },
     mounted() {
@@ -101,7 +106,7 @@ export default {
                 return
             }
             if (this.errored) return
-
+            this.loading = true
             if (this.streamer) {
                 this.$apollo.mutate({
                     mutation: gql `mutation ($username: String!, $sub: String!, $address: String!) {
@@ -130,6 +135,10 @@ export default {
                     }
                 })
             }
+             setTimeout(() => {
+                this.greeting = 'Success! You are done here for now.'
+                this.loading = false    
+             }, 2000);
         },
         decodeToken() {
             let token
@@ -140,6 +149,7 @@ export default {
             }
             token = jwt_decode(token)
             this.username = token.preferred_username
+            this.greeting = `Hello ${this.username}`
             this.userId = token.sub
         }
     }
@@ -160,6 +170,7 @@ export default {
     flex-direction: column;
     position: relative;
     z-index: 10;
+    overflow-y: scroll;
 }
 #streamer-viewer-prompt {
     display: flex;
@@ -174,6 +185,12 @@ export default {
     justify-content: center;
     align-items: center;
     padding-bottom: 1em;
+}
+#submit-feedback-wrap {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .greeting {
     font-size: 1.5rem;
